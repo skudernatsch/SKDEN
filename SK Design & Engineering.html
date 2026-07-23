@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK Design &amp; Engineering LLC — Design, Engineering &amp; IP</title>
+<meta name="description" content="SK Design & Engineering LLC — an innovative design, engineering, and IP generation firm founded by Simon Kudernatsch, Ph.D. Offering intellectual property for sale and licensing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0F2A47;
+    --blue-mid:#1F4C81;
+    --blue-line:#DCEBF7;
+    --paper:#F3EEE1;
+    --paper-line:#0F2A47;
+    --stamp:#B8460E;
+    --stamp-dark:#8F350A;
+    --grid-line: rgba(220,235,247,0.09);
+    --grid-line-strong: rgba(220,235,247,0.16);
+    --radius: 2px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:66px;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--blue-deep);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.03em;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    opacity:.7;
+  }
+
+  /* ---------- Skip link / focus ---------- */
+  .skip-link{
+    position:absolute; left:-999px; top:0; background:var(--stamp); color:#fff;
+    padding:.6rem 1rem; z-index:200; font-family:'IBM Plex Mono',monospace; font-size:.85rem;
+  }
+  .skip-link:focus{ left:1rem; top:1rem; }
+  :focus-visible{ outline:2px solid var(--stamp); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- Blueprint grid backdrop ---------- */
+  .blueprint{
+    background-color:var(--blue-deep);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
+    background-size: 14px 14px, 14px 14px, 70px 70px, 70px 70px;
+    background-position: -1px -1px;
+    color:var(--blue-line);
+  }
+
+  /* ---------- Title-block header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:100;
+    padding: 1rem clamp(1.5rem, 4vw, 5rem);
+    border-bottom:3px solid rgba(220,235,247,.25);
+    backdrop-filter: blur(6px);
+  }
+  .header-inner{
+    max-width:min(1760px, 100%); margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brandmark{
+    display:flex; align-items:center; gap:.65rem;
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700; font-size:1.8rem; letter-spacing:.03em;
+    text-decoration:none; color:var(--blue-line);
+  }
+  .brandmark svg{ width:30px; height:30px; flex-shrink:0; }
+  nav.site-nav{ display:flex; gap:1.6rem; align-items:center; }
+  nav.site-nav a{
+    text-decoration:none; color:var(--blue-line); opacity:.8;
+    font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:.08em; text-transform:uppercase;
+    padding-bottom:2px; border-bottom:1px solid transparent;
+    transition:opacity .2s ease, border-color .2s ease;
+  }
+  nav.site-nav a:hover, nav.site-nav a:focus-visible{ opacity:1; border-color:var(--stamp); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width:720px){
+    nav.site-nav{
+      position:fixed; inset:56px 0 auto 0; flex-direction:column; align-items:flex-start;
+      background:var(--blue-deep); padding:1.2rem 1.5rem 1.6rem; gap:1rem;
+      border-bottom:1px solid rgba(220,235,247,.25);
+      transform:translateY(calc(-100% - 60px)); transition:transform .25s ease;
+    }
+    nav.site-nav.open{ transform:translateY(0); }
+    .nav-toggle{
+      display:flex; align-items:center; justify-content:center; background:none; border:1px solid rgba(220,235,247,.4); color:var(--blue-line);
+      width:64px; height:38px; padding:0; font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:.08em; cursor:pointer;
+    }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding: .5rem clamp(1.5rem, 4vw, 5rem);
+    overflow:hidden;
+    min-height:calc(50svh - 66px);      /*min height top and bottom*/
+    display:flex; align-items:center;
+  }
+  .hero-inner{
+    width:100%;
+    max-width:min(1760px, 100%); margin:0 auto;
+    display:grid; grid-template-columns:minmax(0,620px) minmax(0,760px); gap:3rem; justify-content:start; align-items:center;
+  }
+  @media (max-width:1024px){ .hero-inner{ grid-template-columns:1fr; } }
+
+  .title-tab{
+    display:inline-flex; justify-content: center;align-items:center; gap:.5rem;
+    border:2.5px solid rgba(220,235,247,.4);
+    padding:.3rem .65rem; margin-bottom:1.4rem;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(.6rem, 2.6vw, 1rem); letter-spacing:.1em; text-transform:uppercase;
+    white-space:nowrap;
+    width:100%; max-width:475px; box-sizing:border-box;
+  }
+  .title-tab .dot{ width:8px; height:8px; background:var(--stamp); border-radius:50%; flex-shrink:0; }
+
+  h1.hero-title{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:clamp(2.6rem, 6.4vw, 5.6rem);
+    line-height:.96;
+    letter-spacing:.005em;
+    margin:0 0 1.1rem;
+    text-transform:uppercase;
+  }
+  h1.hero-title .line2{ color:var(--stamp); display:block; }
+
+  .hero p.lede{
+    font-size:1.4rem; line-height:1.5; max-width:53ch; opacity:.92; margin:0 0 1.9rem; width:100%;
+  }
+  @media (min-width:1025px){ .hero p.lede{ width:730px; } }
+
+  .cta-row{ display:flex; gap:.9rem; flex-wrap:wrap; }
+  .hero .cta-row{ width:100%; }
+  @media (min-width:1025px){ .hero .cta-row{ width:700px; } }
+  .hero .cta-row .btn{ flex:1; justify-content:center; text-align:center; font-size:clamp(.6rem, 2.6vw, 1rem); white-space:nowrap; }
+  .btn{
+    font-family:'IBM Plex Mono',monospace; font-size:.82rem; letter-spacing:.06em; text-transform:uppercase;
+    padding:.85rem 1.4rem; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    border:1px solid var(--blue-line); transition:transform .18s ease, background .18s ease, color .18s ease;
+    cursor:pointer;
+  }
+  .btn-primary{ background:var(--stamp); border-color:var(--stamp); color:#fff; }
+  .btn-primary:hover{ background:var(--stamp-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; color:var(--blue-line); }
+  .btn-ghost:hover{ background:rgba(220,235,247,.08); transform:translateY(-2px); }
+
+  /* Patent figure illustration */
+  .fig-wrap{ position:relative; }
+  @media (min-width:1025px){ .fig-wrap{ left:275px; } }
+  .fig-caption{
+    margin-top:-2rem; font-family:'IBM Plex Mono',monospace; font-size:1.30rem; letter-spacing:.08em;
+    text-transform:uppercase; opacity:.65; text-align:center;
+  }
+  .draw-line{
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 2.5s ease forwards;
+  }
+  .draw-line.d2{ animation-delay:.3s; }
+  .draw-line.d3{ animation-delay:.6s; }
+  .draw-line.d4{ animation-delay:.9s; }
+  .draw-line.d5{ animation-delay:1.2s; }
+  .draw-line.has-arrow{ opacity:0; animation-name: draw, arrowfade; }
+  @keyframes arrowfade{ to{ opacity:.72; } }
+  .fade-in{ opacity:0; animation: fadein .5s ease forwards; animation-delay:1.4s; }
+  .fade-in.d2{ animation-delay:1.7s; }
+  .fade-in.d3{ animation-delay:2s; }
+  .fade-in.d4{ animation-delay:2.3s; }
+  .fade-in.d5{ animation-delay:2.6s; }
+  .fade-in.d6{ animation-delay:2.9s; }
+  .fade-in.solid{ animation-name: solidfade; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadein{ to{ opacity:.72; } }
+  @keyframes solidfade{ to{ opacity:1; } }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:5rem clamp(1.5rem, 4vw, 5rem); }
+  .section-inner{ max-width:min(1760px, 100%); margin:0 auto; }
+  .section-head{ margin-bottom:2.6rem; max-width:60ch; }
+  .section-head h2{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700; font-size:clamp(1.8rem,3.6vw,2.6rem);
+    text-transform:uppercase; margin:.4rem 0 0; letter-spacing:.01em;
+  }
+  .rule{ height:3px; background:var(--stamp); width:60px; margin-top:1.1rem; }
+
+  /* ---------- About (this is second page) ---------- */
+  .about{ background:var(--paper); }
+  .about .eyebrow, .process .eyebrow, .portfolio .eyebrow, .contact .eyebrow{ font-size:1rem; }
+  .about .section-head h2, .process .section-head h2, .portfolio .section-head h2, .contact .section-head h2{ font-size:clamp(3.5rem, 3.7vw, 2.6rem); }
+  .about-grid{ display:grid; grid-template-columns:.6fr 1.55fr; gap:3rem; align-items:start; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+
+  .id-card{
+    border:1px solid var(--blue-deep);
+    padding:1.6rem;
+    position:relative;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(15,42,71,.05) 27px, rgba(15,42,71,.05) 28px);
+  }
+  .id-card::before{
+    content:"";
+    position:absolute; inset:6px;
+    border:1px solid rgba(15,42,71,.35);
+    pointer-events:none;
+  }
+  .id-row{ display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px dashed rgba(15,42,71,.25); font-size:1rem; }
+  .id-row:last-child{ border-bottom:none; }
+  .id-row .k{ font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; font-size:.85rem; opacity:.6; }
+  .id-row .v{ font-weight:600; text-align:right; }
+
+  .about-copy p{ line-height:1.65; font-size:1.2rem; margin:0 0 1.1rem; }
+  .about-copy p:first-child::first-letter{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-size:3.5rem; font-weight:800; float:left; line-height:.8; padding:.7rem .35rem 0 0; color:var(--stamp);
+  }
+
+  .credentials{ display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.5rem; }
+  .credentials span{
+    font-family:'IBM Plex Mono',monospace; font-size:.76rem; letter-spacing:.05em; text-transform:uppercase;
+    border:1px solid rgba(15,42,71,.35); padding:.35rem .6rem;
+  }
+
+  /* ---------- Portfolio (blueprint section) ---------- */
+  .portfolio{ position:relative; }
+  .card-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:1rem; }
+  @media (max-width:920px){ .card-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px){ .card-grid{ grid-template-columns:1fr; } }
+
+  .ip-card{
+    border:1px solid rgba(220,235,247,.35);
+    padding:1.5rem 1.4rem 1.6rem;
+    display:flex; flex-direction:column; gap:.9rem;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    background:rgba(220,235,247,.02);
+  }
+  .ip-card:hover, .ip-card:focus-within{
+    transform:translateY(-4px);
+    border-color:var(--stamp);
+    background:rgba(220,235,247,.06);
+  }
+  .ip-card .fig-num{ font-family:'IBM Plex Mono',monospace; font-size:1rem; opacity:.6; }
+  .ip-card h3{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:700; font-size:1.75rem; margin:0;
+    text-transform:uppercase; letter-spacing:.01em;
+  }
+  .ip-card-title{ text-decoration:none; }
+  .ip-card p{ font-size:1.3rem; line-height:1.6; opacity:.9; margin:0; flex-grow:1; }
+  .ip-status{
+    align-self:flex-start; font-family:'IBM Plex Mono',monospace; font-size: .85rem; letter-spacing:.07em; text-transform:uppercase;
+    padding:.28rem .55rem; border:1px solid var(--stamp); color:var(--stamp);
+  }
+  .ip-card .icon{ width:44px; height:44px; opacity:.9; }
+  .ip-card .learn{
+    margin-top:.3rem; font-family:'IBM Plex Mono',monospace; font-size:1rem; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--blue-line); text-decoration:none; border-bottom:1px solid var(--stamp);
+    padding-bottom:2px; align-self:flex-start;
+  }
+
+  .portfolio-note{
+    margin-top:2.2rem; font-family:'IBM Plex Mono',monospace; font-size:.85rem; opacity:.65; max-width:60ch;
+  }
+
+  /* ---------- Process strip ---------- */
+  .process{ background:var(--paper); }
+  .process-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+  @media (max-width:820px){ .process-grid{ grid-template-columns:1fr; } }
+  .process-item{ padding-top:1.2rem; border-top:2px solid var(--blue-deep); }
+  .process-item .tag{ font-family:'IBM Plex Mono',monospace; font-size:1rem; opacity:.55; }
+  .process-item h3{
+    font-family:'Big Shoulders Display', sans-serif; font-size:1.5rem; text-transform:uppercase; margin:.3rem 0 .6rem;
+  }
+  .process-item p{ font-size:1.2rem; line-height:1.65; opacity:.85; margin:0; }
+
+  /* ---------- Contact ---------- */
+  .contact{ position:relative; }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+
+  .contact-info p{ font-size:1.2rem; line-height:1.7; opacity:.9; max-width:60ch; }
+  .contact-line{ display:flex; gap:.8rem; align-items:baseline; margin:.9rem 0; font-family:'IBM Plex Mono',monospace; font-size:1rem; }
+  .contact-line .k{ opacity:.55; font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; min-width:70px; }
+  .contact-line a{ text-decoration:none; border-bottom:1px solid var(--stamp); }
+
+  form.inquiry{ display:flex; flex-direction:column; gap:1.1rem; }
+  .field{ display:flex; flex-direction:column; gap:.4rem; }
+  .field label{
+    font-family:'IBM Plex Mono',monospace; font-size:.95rem; letter-spacing:.08em; text-transform:uppercase; opacity:.7;
+  }
+  .field input, .field textarea, .field select{
+    background:transparent; border:none; border-bottom:1px solid rgba(220,235,247,.4);
+    color:var(--blue-line); font-family:'IBM Plex Sans',sans-serif; font-size:1.1rem; padding:.5rem .2rem;
+    transition:border-color .2s ease;
+  }
+  .field select option{ color:#111; }
+  .field input:focus, .field textarea:focus, .field select:focus{ border-color:var(--stamp); outline:none; }
+  form.inquiry .btn{ align-self:flex-start; margin-top:.5rem; }
+
+  /* ---------- Footer / title block ---------- */
+  footer{
+    border-top:1px solid rgba(220,235,247,.25);
+    padding:1.6rem 1.5rem;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8rem;
+    font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; opacity:.6;
+  }
+  .tblock{ display:flex; gap:1.4rem; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site blueprint">
+  <div class="header-inner">
+  <a href="#top" class="brandmark">
+    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="1.4"/>
+      <line x1="15" y1="0.5" x2="15" y2="29.5" stroke="currentColor" stroke-width="1"/>
+      <line x1="0.5" y1="15" x2="29.5" y2="15" stroke="currentColor" stroke-width="1"/>
+      <circle cx="15" cy="15" r="3" fill="#B8460E"/>
+    </svg>
+    SKDEN LLC
+  </a>
+  <button class="nav-toggle mono" id="navToggle" aria-expanded="false" aria-controls="siteNav">MENU</button>
+  <nav class="site-nav" id="siteNav">
+    <a href="#top">Home</a>
+    <a href="#about">Founder</a>
+    <a href="#portfolio">IP Portfolio</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div id="top"></div>
+  <section class="hero blueprint">
+    <div class="hero-inner">
+      <div>
+        <div class="title-tab"><span class="dot"></span> Est. 2026 — Design, Engineering &amp; IP</div>
+        <h1 class="hero-title">SK Design<span class="line2">&amp; Engineering</span></h1>
+        <p class="lede">Innovative design, engineering, and IP generation firm founded in 2026 by Simon Kudernatsch, a Czech-American engineer and inventor. SKDEN is currently offering IP for sale, licensing, and collaboration.</p>
+        <div class="cta-row">
+          <a href="#portfolio" class="btn btn-primary">view IP Portfolio</a>
+          <a href="#contact" class="btn btn-ghost">Inquire about Licensing</a>
+        </div>
+      </div>
+
+      <div class="fig-wrap">
+        <svg viewBox="10 -15 565 395" width="100%" role="img" aria-labelledby="figTitle" style="width:100%; height:auto; max-width:720px;" font-family="'IBM Plex Mono', monospace">
+          <title id="figTitle">Section A-A — patent-style technical illustration representing an engineered mechanism</title>
+          <defs>
+            <marker id="blackArrow" markerWidth="15" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+              <path d="M0,0 L15,4.5 L0,9 Z" fill="var(--blue-line)"/>
+            </marker>
+            <marker id="redArrow" markerWidth="14" markerHeight="9" refX="13" refY="4.5" orient="auto">
+              <path d="M0,0 L14,4.5 L0,9 Z" fill="var(--stamp)"/>
+            </marker>
+            <mask id="mTop">
+              <rect x="475" y="67" width="78" height="69" fill="#fff"/>
+              <circle cx="514" cy="101" r="25.5" fill="#000"/>
+            </mask>
+            <mask id="mBot">
+              <rect x="475" y="233" width="78" height="70" fill="#fff"/>
+              <circle cx="514" cy="268" r="25.5" fill="#000"/>
+            </mask>
+          </defs>
+
+          <!-- ============ FRONT VIEW ============ -->
+          <circle class="draw-line" cx="228.5" cy="184" r="117.5" fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+          <circle class="draw-line d2" cx="228"   cy="184" r="49"    fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+
+          <g class="draw-line d3" fill="none" stroke="var(--blue-line)" stroke-width="1.5">
+            <line x1="75"  y1="184" x2="111" y2="184"/>
+            <line x1="346" y1="184" x2="378" y2="184"/>
+            <line x1="145.4" y1="100.9" x2="122" y2="77.5"/>
+            <line x1="311.6" y1="100.9" x2="335" y2="77.5"/>
+            <line x1="145.4" y1="267.1" x2="122" y2="290.5"/>
+            <line x1="311.6" y1="267.1" x2="335" y2="290.5"/>
+          </g>
+
+          <line class="fade-in" x1="228" y1="67" x2="228" y2="302" stroke="var(--blue-line)" stroke-width="2" opacity=".7"
+                stroke-dasharray="35 7 7 7 7 7" stroke-dashoffset="-3"/>
+
+          <polyline class="draw-line d4 has-arrow" points="228,62 228,39 282,39" fill="none" stroke="var(--blue-line)" stroke-width="2.5"
+                    marker-end="url(#blackArrow)"/>
+          <text class="fade-in d2" x="308" y="53" font-size="41" fill="var(--blue-line)" opacity=".7">A</text>
+
+          <polyline class="draw-line d5 has-arrow" points="228,308 228,331 282,331" fill="none" stroke="var(--blue-line)" stroke-width="2.5"
+                    marker-end="url(#blackArrow)"/>
+          <text class="fade-in d3" x="308" y="345" font-size="41" fill="var(--blue-line)" opacity=".7">A</text>
+
+          <!-- ============ SECTION VIEWS ============ -->
+          <g class="fade-in d3" mask="url(#mTop)" stroke="var(--stamp)" stroke-width="1">
+            <line x1="414" y1="136" x2="483" y2="67"/>
+            <line x1="439" y1="136" x2="508" y2="67"/>
+            <line x1="464" y1="136" x2="533" y2="67"/>
+            <line x1="489" y1="136" x2="558" y2="67"/>
+            <line x1="514" y1="136" x2="583" y2="67"/>
+            <line x1="539" y1="136" x2="608" y2="67"/>
+          </g>
+          <rect class="draw-line d4" x="475" y="67" width="78" height="69" fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+          <circle class="draw-line d4" cx="514" cy="101" r="25.5" fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+
+          <g class="fade-in d3" mask="url(#mBot)" stroke="var(--stamp)" stroke-width="1">
+            <line x1="422" y1="303" x2="492" y2="233"/>
+            <line x1="447" y1="303" x2="517" y2="233"/>
+            <line x1="472" y1="303" x2="542" y2="233"/>
+            <line x1="497" y1="303" x2="567" y2="233"/>
+            <line x1="522" y1="303" x2="592" y2="233"/>
+            <line x1="547" y1="303" x2="617" y2="233"/>
+          </g>
+          <rect class="draw-line d5" x="475" y="233" width="78" height="70" fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+          <circle class="draw-line d5" cx="514" cy="268" r="25.5" fill="none" stroke="var(--blue-line)" stroke-width="2"/>
+
+          <text class="fade-in d4" x="513" y="338" font-size="17.5" font-weight="bold" fill="var(--blue-line)" text-anchor="middle" opacity=".72">SECTION A-A</text>
+
+          <!-- ============ BALLOONS ============ -->
+          <g class="fade-in d5">
+            <line x1="98" y1="109" x2="152" y2="142" stroke="var(--stamp)" stroke-width="1.2"/>
+            <circle cx="152" cy="142.5" r="4" fill="var(--stamp)"/>
+            <circle cx="75" cy="97" r="27" fill="none" stroke="var(--stamp)" stroke-width="1.5"/>
+            <text x="75" y="105" font-size="22" fill="var(--stamp)" text-anchor="middle">2</text>
+          </g>
+
+          <g class="fade-in d5">
+            <line x1="400" y1="248" x2="370" y2="189" stroke="var(--stamp)" stroke-width="1.2"
+                  marker-end="url(#redArrow)"/>
+            <circle cx="412" cy="272" r="27" fill="none" stroke="var(--stamp)" stroke-width="1.5"/>
+            <text x="412" y="280" font-size="22" fill="var(--stamp)" text-anchor="middle">4</text>
+          </g>
+
+          <g class="fade-in d6">
+            <line x1="446" y1="70" x2="514" y2="101" stroke="var(--stamp)" stroke-width="1.2"/>
+            <circle cx="514" cy="101" r="4" fill="var(--stamp)"/>
+            <circle cx="422" cy="56" r="27" fill="none" stroke="var(--stamp)" stroke-width="1.5"/>
+            <text x="422" y="64" font-size="22" fill="var(--stamp)" text-anchor="middle">6</text>
+          </g>
+
+          <circle class="fade-in solid" cx="228" cy="184" r="5" fill="var(--stamp)"/>
+        </svg>
+        <!-- <p class="fig-caption mono">Fig. 1 — Cogged cylinder with x-sectional</p> -->
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="section-inner about-grid">
+      <div>
+        <p class="eyebrow">Founder</p>
+        <div class="id-card">
+          <div class="id-row"><span class="k">Name</span><span class="v">Simon Kudernatsch, Ph.D.</span></div>
+          <div class="id-row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/kudernatsch" target="_blank" rel="noopener" style="text-decoration:none; border-bottom:1px solid var(--stamp);">in/kudernatsch</a></span></div>
+          <div class="id-row"><span class="k">Role</span><span class="v">Founder &amp; Chief Engineer</span></div>
+          <div class="id-row"><span class="k">Nationality</span><span class="v">Czech — American</span></div>
+          <div class="id-row"><span class="k">Discipline</span><span class="v">Design &amp; Engineering</span></div>
+          <div class="id-row"><span class="k">Firm Est.</span><span class="v">2026</span></div>
+          <div class="credentials">
+            <span>Ph.D.</span>
+            <span>Inventor</span>
+            <span>IP Licensing</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">About the firm</p>
+        <h2 style="font-family:'Big Shoulders Display',sans-serif; text-transform:uppercase; font-size:clamp(3.5rem,3.7vw,2.6rem); margin:.4rem 0 1.4rem;">Engineering, ownership, partnership</h2>
+        <div class="about-copy">
+          <p>SK Design  &amp; Engineering LLC was founded in 2026 by Simon Kudernatsch, PhD, a Czech-American engineer and inventor. The firm operates at the intersection of original product design and intellectual property development. Every project is driven by patentable innovation because we believe it solves a real problem, brings genuine joy to its users, and fills a unique niche in the marketplace. We welcome partnerships with established companies to further develop and commercialize our technologies, offer our intellectual property for licensing, patent acquisition, and are open to discussions regarding investment opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio blueprint" id="portfolio">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="eyebrow">Available now</p>
+        <h2>IP Portfolio</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="card-grid">
+        <article class="ip-card">
+          <svg class="icon" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" stroke="var(--blue-line)" stroke-width="1.2"/><path d="M22 10v24M10 22h24" stroke="var(--blue-line)" stroke-width="1"/><circle cx="22" cy="22" r="4" fill="#B8460E"/></svg>
+          <span class="fig-num mono">Ref. No. SKDEN-001</span>
+          <h3><a href="strollski.html" class="ip-card-title" target="_blank" rel="noopener">StrollSki<sup>TM</sup></a></h3>
+          <p>Turn any stroller into an all-terrain snow sled — full-size, metal-edged skis, a foot brake, and a safety tether so you can hit the trails (not just the sidewalks) with your little one all winter long.</p>
+          <span class="ip-status">For licensing, sale, collaboration</span>
+          <a href="#contact" class="learn">Request details →</a>
+        </article>
+
+        <article class="ip-card">
+          <svg class="icon" viewBox="0 0 44 44" fill="none"><rect x="9" y="9" width="26" height="26" stroke="var(--blue-line)" stroke-width="1.2"/><path d="M9 22h26M22 9v26" stroke="var(--blue-line)" stroke-width="1" stroke-dasharray="2 3"/><circle cx="22" cy="22" r="3" fill="#B8460E"/></svg>
+          <span class="fig-num mono">Ref. No. SKDEN-002</span>
+          <h3><a href="corneallius.html" class="ip-card-title" target="_blank" rel="noopener">Corneallius<sup>TM</sup></a></h3>
+          <p>A fun hand-palm sensory stimulation toy and fidgeter. Comes in a variety of designs and themes — come with us to explore the world of Corneallius.</p>
+          <span class="ip-status">For licensing, sale, collaboration</span>
+          <a href="#contact" class="learn">Request details →</a>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="eyebrow">How we work</p>
+        <h2 style="color:var(--blue-deep);">From concept to license</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="process-grid">
+        <div class="process-item">
+          <p class="tag mono">Design</p>
+          <h3>Original engineering</h3>
+          <p>Every concept starts from a real problem and is developed through sketching, modeling, and prototyping until it works — not just on paper.</p>
+        </div>
+        <div class="process-item">
+          <p class="tag mono">Protect</p>
+          <h3>IP generation</h3>
+          <p>Viable concepts are documented and filed for protection, turning working designs into defensible, ownable intellectual property.
+</p>
+        </div>
+        <div class="process-item">
+          <p class="tag mono">Transfer</p>
+          <h3>Sale &amp; licensing</h3>
+          <p>Finished IP is made available to companies ready to manufacture, integrate, or build on it — through outright sale, licensing terms, or a direct partnership with SKDEN.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact blueprint" id="contact">
+    <div class="section-inner contact-grid">
+      <div class="contact-info">
+        <p class="eyebrow">Get in touch</p>
+        <h2 style="font-family:'Big Shoulders Display',sans-serif; text-transform:uppercase; font-size:clamp(1.8rem,3.4vw,2.4rem); margin:.4rem 0 1rem;">Let's talk IP</h2>
+        <p>Whether you're interested in licensing or acquiring existing intellectual property, exploring investment opportunities, commissioning original design and engineering work, or collaborating with us, get in touch and we'll follow up directly.</p>
+        <div class="contact-line"><span class="k">Email</span><a href="/cdn-cgi/l/email-protection#3e5d51504a5f5d4a7e4d555a5b501052525d"><span class="__cf_email__" data-cfemail="71121e1f0510120531021a15141f5f1d1d12">simon@skden.com</span></a></div>
+        <div class="contact-line"><span class="k">Founded</span><span>2026</span></div>
+        <div class="contact-line"><span class="k">Based</span><span>United States</span></div>
+        <p style="margin-top:3rem; padding:.5rem 1.5rem; border:3px solid rgba(220,235,247,.65);">For additional products and services visit our sister company <a href="https://www.absol.co" target="_blank" rel="noopener" style="text-decoration:none; border-bottom:1px solid var(--stamp);">Advanced Biomechanical Solutions LLC.</a></p>
+      </div>
+      <form class="inquiry" onsubmit="event.preventDefault(); this.reset(); document.getElementById('formStatus').textContent='Message noted — this is a demo form with no backend connected yet.';">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+        </div>
+        <div class="field">
+          <label for="interest">I'm interested in</label>
+          <select id="interest" name="interest">
+            <option>Licensing IP</option>
+            <option>Acquiring IP</option>
+            <option>Collaboration</option>
+            <option>Investment Opportunities</option>
+            <option>Commissioning engineering work</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Inquiry</button>
+        <p id="formStatus" class="mono" style="font-size:.78rem; opacity:.75;"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="blueprint">
+  <div class="tblock">
+    <span>SKDEN LLC</span>
+    <span>Sheet 1 of 1</span>
+    <span>Rev. 2026</span>
+  </div>
+  <div>© 2026 SK Design &amp; Engineering LLC. All rights reserved.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('siteNav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
