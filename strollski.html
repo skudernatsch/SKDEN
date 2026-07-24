@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrollSki&trade; — Turn any stroller into a snow sled | SKDEN</title>
+<meta name="description" content="StrollSki — turn any stroller into an all-terrain snow sled with full-size, metal-edged skis, a foot brake, and a safety tether. A patent-pending design by SK Design & Engineering LLC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#3C5878;
+    --tan:#D9D9C9;
+    --rust:#9C5138;
+    --rust-dark:#7A3C28;
+    --ice:#E9EEF3;
+    --sky:#8FA9CC;
+    --card:#F5F5EF;
+    --grid-line: rgba(233,238,243,.07);
+    --grid-line-strong: rgba(233,238,243,.13);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:70px;}
+  body{
+    margin:0;
+    background:var(--tan);
+    color:var(--slate);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  a:hover{color:var(--rust);}
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1rem; letter-spacing:.18em; text-transform:uppercase; opacity:.7; margin:0;
+  }
+
+  @keyframes ssfall{ 0%{ transform:translateY(-40px); } 100%{ transform:translateY(105vh); } }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- Shared section shell ---------- */
+  section{ padding:5rem clamp(1.5rem, 4vw, 5rem); }
+  .section-inner{ max-width:1760px; margin:0 auto; }
+  .section-head h2{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700; font-size:clamp(2.4rem, 4.5vw, 3.5rem);
+    text-transform:uppercase; margin:.4rem 0 0; letter-spacing:.01em;
+  }
+  .rule{ height:3px; background:var(--rust); width:60px; margin:1.1rem 0 2.8rem; }
+
+  /* ---------- Ski-tip logo mark ---------- */
+  .ski-tick{ display:inline-block; width:.125em; height:.95em; fill:currentColor; }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:100;
+    background:rgba(60,88,120,.92); backdrop-filter:blur(6px);
+    border-bottom:3px solid rgba(233,238,243,.25);
+    padding:.9rem clamp(1.5rem, 4vw, 5rem);
+    color:var(--ice);
+  }
+  .header-inner{
+    max-width:1760px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+  }
+  .brandmark{
+    display:flex; align-items:baseline;
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.9rem; letter-spacing:.03em;
+    text-decoration:none; color:var(--ice);
+  }
+  .brandmark sup{ font-size:.37em; font-weight:600; margin-left:.15em; transform:translateY(-2em); display:inline-block; }
+
+  nav.site-nav{
+    display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace; font-size:.95rem; letter-spacing:.08em; text-transform:uppercase;
+  }
+  nav.site-nav a{
+    text-decoration:none; opacity:.85; border-bottom:1px solid transparent; padding-bottom:2px;
+    transition:opacity .2s ease, border-color .2s ease;
+  }
+  nav.site-nav a:hover{ opacity:1; border-color:var(--rust); color:var(--ice); }
+  nav.site-nav a.back{ border:1px solid rgba(233,238,243,.45); padding:.35rem .7rem; opacity:.9; }
+  nav.site-nav a.back:hover{ opacity:1; border-color:var(--rust); color:var(--ice); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:.95rem; letter-spacing:.06em; text-transform:uppercase;
+    padding:.9rem 1.6rem; text-decoration:none; display:inline-flex; align-items:center;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-primary{ background:var(--rust); border:1px solid var(--rust); color:#fff; }
+  .btn-primary:hover{ background:var(--rust-dark); transform:translateY(-2px); color:#fff; }
+  .btn-ghost{ background:transparent; border:1px solid var(--ice); color:var(--ice); }
+  .btn-ghost:hover{ background:rgba(233,238,243,.1); transform:translateY(-2px); color:var(--ice); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; min-height:calc(92svh - 70px);
+    display:flex; align-items:center;
+    background:var(--slate); color:var(--ice); overflow:hidden;
+  }
+  .hero .photo-slot{ position:absolute; inset:0; }
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, rgba(60,88,120,.92) 0%, rgba(60,88,120,.72) 45%, rgba(60,88,120,.25) 100%);
+    pointer-events:none;
+  }
+  .snow{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+  .snow span{ position:absolute; top:0; border-radius:50%; background:var(--ice); animation-name:ssfall; animation-timing-function:linear; animation-iteration-count:infinite; }
+
+  .hero-inner{
+    position:relative; z-index:2; width:100%; max-width:1760px; margin:0 auto;
+    padding:4rem clamp(1.5rem, 4vw, 5rem); pointer-events:none;
+  }
+  .hero-copy{ pointer-events:auto; max-width:820px; }
+
+  .title-tab{
+    display:inline-flex; align-items:center; gap:.55rem;
+    border:2.5px solid rgba(233,238,243,.4);
+    padding:.35rem .75rem; margin-bottom:1.5rem;
+    font-family:'IBM Plex Mono', monospace; font-size:clamp(.65rem, 1.6vw, .95rem); letter-spacing:.12em; text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .title-tab .dot{ width:8px; height:8px; background:var(--rust); border-radius:50%; flex-shrink:0; }
+
+  h1.hero-title{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800;
+    font-size:clamp(3.2rem, 8vw, 7rem); line-height:.95; letter-spacing:.005em;
+    margin:0 0 .4rem; display:flex; align-items:baseline; flex-wrap:wrap;
+  }
+  h1.hero-title sup{ font-size:.34em; font-weight:600; margin-left:.15em; transform:translateY(-2em); display:inline-block; }
+
+  .tagline{
+    font-family:'IBM Plex Mono', monospace; font-size:clamp(1rem, 2.2vw, 1.45rem); letter-spacing:.14em; text-transform:uppercase;
+    color:var(--rust); background:var(--tan); display:inline-block; padding:.25rem .7rem; margin:0 0 1.6rem;
+  }
+  .hero p.lede{ font-size:1.4rem; line-height:1.5; max-width:52ch; opacity:.93; margin:0 0 2rem; }
+  .cta-row{ display:flex; gap:.9rem; flex-wrap:wrap; }
+
+  .stripe{ position:absolute; left:0; right:0; height:18px; z-index:3; display:flex; flex-direction:column; pointer-events:none; }
+  .stripe div{ flex:1; }
+
+  /* ---------- Photo placeholder ---------- */
+  .photo-slot{
+    display:flex; align-items:center; justify-content:center; width:100%; height:100%;
+    background:repeating-linear-gradient(45deg, rgba(60,88,120,.08), rgba(60,88,120,.08) 10px, rgba(60,88,120,.03) 10px, rgba(60,88,120,.03) 20px);
+    border:1px dashed rgba(60,88,120,.3); color:rgba(60,88,120,.55);
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem; text-align:center; padding:1rem;
+  }
+  .photo-slot.on-dark{
+    background:repeating-linear-gradient(45deg, rgba(233,238,243,.06), rgba(233,238,243,.06) 10px, rgba(233,238,243,.02) 10px, rgba(233,238,243,.02) 20px);
+    border-color:rgba(233,238,243,.3); color:rgba(233,238,243,.6);
+  }
+
+  /* ---------- Features ---------- */
+  .features{ background:var(--tan); color:var(--slate); }
+  .feature-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; }
+  .feature-item{ padding-top:1.2rem; border-top:2px solid var(--slate); }
+  .feature-item .tag{ font-family:'IBM Plex Mono', monospace; font-size:1rem; opacity:.55; margin:0; }
+  .feature-item h3{ font-family:'Big Shoulders Display', sans-serif; font-size:1.6rem; text-transform:uppercase; margin:.3rem 0 .6rem; }
+  .feature-item p{ font-size:1.2rem; line-height:1.65; opacity:.85; margin:0; }
+
+  /* ---------- Detail (blueprint) ---------- */
+  .detail{
+    background-color:var(--slate);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
+    background-size: 14px 14px, 14px 14px, 70px 70px, 70px 70px;
+    color:var(--ice);
+  }
+  .detail-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:3rem; align-items:start; }
+  .fig-frame{ border:1px solid rgba(233,238,243,.35); padding:10px; background:rgba(233,238,243,.03); }
+  .fig-frame .photo-slot{ width:100%; aspect-ratio:4/3; }
+  .fig-caption{
+    font-family:'IBM Plex Mono', monospace; font-size:1rem; letter-spacing:.08em; text-transform:uppercase;
+    opacity:.65; text-align:center; margin:.9rem 0 0;
+  }
+  .callouts{ display:flex; flex-direction:column; gap:1.15rem; }
+  .callout{ display:flex; gap:1rem; align-items:baseline; border-bottom:1px dashed rgba(233,238,243,.3); padding-bottom:1.1rem; }
+  .callout .num{ font-family:'IBM Plex Mono', monospace; color:var(--rust); font-size:1.05rem; min-width:2.2rem; }
+  .callout p{ margin:0; font-size:1.2rem; line-height:1.55; opacity:.92; }
+  .detail-note{ font-family:'IBM Plex Mono', monospace; font-size:.9rem; letter-spacing:.06em; opacity:.65; margin:.4rem 0 0; }
+
+  /* ---------- Models ---------- */
+  .models{ background:var(--ice); color:var(--slate); }
+  .model-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.6rem; }
+  .model-card{ background:var(--card); border:1px solid rgba(60,88,120,.25); display:flex; flex-direction:column; }
+  .model-card .stripe-top{ height:10px; display:flex; flex-direction:column; }
+  .model-card .stripe-top div{ flex:1; }
+  .model-card-body{ padding:1.6rem 1.5rem 1.8rem; display:flex; flex-direction:column; gap:.8rem; flex:1; }
+  .model-card .photo-slot{ width:100%; height:auto; aspect-ratio:3/2; overflow:hidden; }
+  .model-card h3{ font-family:'Big Shoulders Display', sans-serif; font-weight:700; font-size:1.75rem; margin:.4rem 0 0; text-transform:uppercase; }
+  .model-card .desc{ font-size:1.15rem; line-height:1.6; opacity:.85; margin:0; flex:1; }
+  .model-card .price{ font-family:'IBM Plex Mono', monospace; font-size:1.3rem; font-weight:600; margin:0; color:var(--rust); }
+  .placeholder-note{ font-family:'IBM Plex Mono', monospace; font-size:.85rem; opacity:.6; margin:2rem 0 0; }
+
+  /* ---------- Reviews ---------- */
+  .reviews{ background:var(--tan); color:var(--slate); }
+  .review-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.6rem; }
+  blockquote.review{
+    margin:0; border:1px solid rgba(60,88,120,.3); padding:1.6rem 1.5rem;
+    background:repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(60,88,120,.05) 27px, rgba(60,88,120,.05) 28px);
+    display:flex; flex-direction:column; gap:1rem;
+  }
+  .review-pull{ font-family:'Big Shoulders Display', sans-serif; font-weight:700; font-size:1.6rem; text-transform:uppercase; margin:0; color:var(--rust); }
+  .review-body{ font-size:1.15rem; line-height:1.6; opacity:.85; margin:0; flex:1; }
+  .review-who{ font-family:'IBM Plex Mono', monospace; font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; opacity:.65; margin:0; }
+
+  /* ---------- Outro ---------- */
+  .outro{
+    position:relative; min-height:70svh; display:flex; align-items:center; justify-content:center;
+    background:var(--slate); color:var(--ice); overflow:hidden; text-align:center;
+  }
+  .outro .photo-slot{ position:absolute; inset:0; }
+  .outro-scrim{ position:absolute; inset:0; background:rgba(60,88,120,.6); pointer-events:none; }
+  .outro-inner{ position:relative; z-index:2; padding:6rem clamp(1.5rem, 4vw, 5rem); pointer-events:none; }
+  .outro h2{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:clamp(2.8rem, 6.5vw, 5.6rem);
+    line-height:.98; text-transform:uppercase; margin:0 0 1.6rem; max-width:16ch;
+  }
+  .outro h2 sup{ font-size: .34em; font-weight:600; margin-left:.15em; transform:translateY(-.7em); display:inline-block; }
+  .outro .btn{ pointer-events:auto; font-size:1rem; padding:1rem 2rem; }
+
+  /* ---------- Contact ---------- */
+  .contact{ background:var(--slate); color:var(--ice); border-top:1px solid rgba(233,238,243,.2); }
+  .contact-inner{ max-width:1100px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:1.2rem; }
+  .contact h2{ font-family:'Big Shoulders Display', sans-serif; font-weight:700; font-size:clamp(2.2rem, 4vw, 3.2rem); text-transform:uppercase; margin:0; }
+  .contact h2 sup{ font-size:.35em; font-weight:600; margin-left:.15em; margin-right:.2em; transform:translateY(-.7em); display:inline-block; }
+  .contact p.lede2{ font-size:1.25rem; line-height:1.6; opacity:.9; max-width:58ch; margin:0; }
+  .contact .btn{ margin-top:.6rem; }
+  .contact-email{ font-family:'IBM Plex Mono', monospace; font-size:.95rem; opacity:.7; margin:.4rem 0 0; }
+  .contact-email a{ text-decoration:none; border-bottom:1px solid var(--rust); color:var(--ice); }
+
+  /* ---------- Footer ---------- */
+  footer.site{
+    background:var(--slate); color:var(--ice); border-top:1px solid rgba(233,238,243,.25);
+    padding:1.6rem clamp(1.5rem, 4vw, 5rem);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8rem;
+    font-family:'IBM Plex Mono', monospace; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; opacity:.7;
+  }
+  footer.site .left{ display:flex; gap:1.4rem; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a href="#top" class="brandmark">
+      <span>Stro</span><svg class="ski-tick" style="margin:0 .045em 0 .05em;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><svg class="ski-tick" style="margin:0 .04em 0 0;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><span>Ski</span><sup>TM</sup>
+    </a>
+    <nav class="site-nav">
+      <a href="#features">Why</a>
+      <a href="#detail">In Detail</a>
+      <a href="#models">Models</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+      <a href="index.html" class="back">&larr; SKDEN LLC</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <img src="Photos/2026-02-16 13.59.49.jpg" alt="Winter trail with stroller ski" class="photo-slot" style="object-fit:cover; object-position:50% 50%;">
+    <div class="hero-scrim"></div>
+    <div class="snow" id="snow"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="title-tab">
+          <span class="dot"></span>
+          Patent Pending — Ref. No. SKDEN-001
+        </div>
+        <h1 class="hero-title">
+          <span>Stro</span><svg class="ski-tick" style="margin:0 .045em 0 .05em;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><svg class="ski-tick" style="margin:0 .04em 0 0;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><span>Ski</span><sup>TM</sup>
+        </h1>
+        <p class="tagline">Winter tested. Winter approved.</p>
+        <p class="lede">Turn any stroller into an all-terrain snow sled. Full-size, metal-edged skis, a foot brake, and a safety tether — so you can hit the trails, not just the sidewalks, with your little one all winter long.</p>
+        <div class="cta-row">
+          <a href="#features" class="btn btn-primary">Learn more</a>
+          <a href="#contact" class="btn btn-ghost">Get yours</a>
+        </div>
+      </div>
+    </div>
+    <div class="stripe" style="bottom:0;">
+      <div style="background:var(--rust);"></div>
+      <div style="background:var(--tan);"></div>
+      <div style="background:var(--sky);"></div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="section-inner">
+      <p class="eyebrow">Why StrollSki</p>
+      <div class="section-head">
+        <h2 style="max-width:24ch;">Say goodbye to staying in. Hello to going out.</h2>
+      </div>
+      <div class="rule"></div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <p class="tag">01 — Float</p>
+          <h3>Real skis. Real edges.</h3>
+          <p>Full-size downhill, all-mountain, or backcountry skis with hardened metal edges — not short plastic sleds. StrollSki floats through deep, unpacked, and ungroomed snow where existing products stall out.</p>
+        </div>
+        <div class="feature-item">
+          <p class="tag">02 — Fit</p>
+          <h3>Fits any stroller</h3>
+          <p>Three or four wheels, any wheelbase, any width. A sliding rear track, telescoping crossbar, and exchangeable standoffs adjust independently to fit substantially any commercially available stroller.</p>
+        </div>
+        <div class="feature-item">
+          <p class="tag">03 — Safety</p>
+          <h3>Brake &amp; tether built in</h3>
+          <p>A step-on foot brake digs into the snow to hold the stroller in place on any grade, and a waist-strap tether keeps the StrollSki with you at all times on the trail.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="detail" class="detail">
+    <div class="section-inner">
+      <p class="eyebrow">Under the hood</p>
+      <div class="section-head">
+        <h2>The StrollSki in detail</h2>
+      </div>
+      <div class="rule"></div>
+      <div class="detail-grid">
+        <div>
+          <div class="fig-frame">
+            <img src="Renders\Final Renders\Stroller_3num.png" alt="Patent fig. 1 — isometric view of the stroller ski system" class="photo-slot" style="object-fit:cover; object-position:50% 50%;">
+          </div>
+          <p class="fig-caption">Fig. 1 — Stroller ski system</p>
+        </div>
+        <div class="callouts">
+          <div class="callout">
+            <span class="num mono">14</span>
+            <p><strong>V-groove wheel cradles.</strong> Rear and front attachments seat stroller wheels of any diameter and width, secured by a ratchet-strap retention system.</p>
+          </div>
+          <div class="callout">
+            <span class="num mono">22</span>
+            <p><strong>Sliding rear track.</strong> The rear attachment locks at discrete intervals along a ski-mounted track — matching any stroller wheelbase with one lever.</p>
+          </div>
+          <div class="callout">
+            <span class="num mono">40</span>
+            <p><strong>Telescoping crossbar.</strong> Sets ski spacing and front-wheel width; twin tongue-and-groove joints keep it rigid, a thumb-screw lock holds it fast.</p>
+          </div>
+          <div class="callout">
+            <span class="num mono">64</span>
+            <p><strong>Swap-height standoffs.</strong> Exchangeable standoffs lift the front wheels clear of the snow — pick the clearance your trails demand.</p>
+          </div>
+          <div class="callout">
+            <span class="num mono">76</span>
+            <p><strong>Foot brake + tether.</strong> A push-latch pedal brake bites into the snow on each ski; a waist-strap tether keeps you connected on every descent.</p>
+          </div>
+          <p class="detail-note">Numbers reference the provisional patent application. Patent pending.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="models" class="models">
+    <div class="section-inner">
+      <p class="eyebrow">Made for you</p>
+      <div class="section-head">
+        <h2>StrollSki fits your winter</h2>
+      </div>
+      <div class="rule"></div>
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="stripe-top"><div style="background:var(--rust);"></div><div style="background:var(--sky);"></div></div>
+          <div class="model-card-body">
+            <img src="Photos/2026-02-15 15.09.35.jpg" alt="StrollSki Trail — product photo" class="photo-slot" style="object-fit:cover; object-position:50% 50%; transform:scale(1);">
+            <h3>StrollSki On the Slopes</h3>
+            <p class="desc">Turns out "watch the baby" and "get a few runs in" don't have to be either/or.</p>
+      
+          </div>
+        </div>
+        <div class="model-card">
+          <div class="stripe-top"><div style="background:var(--rust);"></div><div style="background:var(--sky);"></div></div>
+          <div class="model-card-body">
+            <img src="Photos/2026-02-21 13.24.11.jpg" alt="StrollSki in the park" class="photo-slot" style="object-fit:cover; object-position:50% 50%; transform:scale(1);">
+            <h3>StrollSki in the park</h3>
+            <p class="desc">"Unplowed" is a suggestion, not a stop sign.</p>
+         
+          </div>
+        </div>
+        <div class="model-card">
+          <div class="stripe-top"><div style="background:var(--rust);"></div><div style="background:var(--sky);"></div></div>
+          <div class="model-card-body">
+            <img src="Photos/2026-02-21 13.30.45.jpg" alt="StrollSki Backcountry — product photo" class="photo-slot" style="object-fit:cover; object-position:50% 50%; transform:scale(1);">
+            <h3>StrollSki Family</h3>
+            <p class="desc">The cold moments together create the stories to tell later — bonding starts outside.</p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="reviews" class="reviews">
+    <div class="section-inner">
+      <p class="eyebrow">From the trails</p>
+      <div class="section-head">
+        <h2>Testimonials</h2>
+      </div>
+      <div class="rule"></div>
+      <div class="review-grid">
+        <blockquote class="review">
+          <p class="review-pull">&ldquo;Hey, this is awesome&rdquo;</p>
+          <p class="review-body"> Random lady: where can I get one of these. I need one. My wife: Ok - get my number, my husband made it, he will patent it and we will let you know.</p>
+          <p class="review-who">Some lady at Saddleback, Rangeley, ME</p>
+        </blockquote>
+        <blockquote class="review">
+          <p class="review-pull">&ldquo;F.. yeah&rdquo;</p>
+          <p class="review-body">"Beer in hand, didn't have kids but seemed genuinly interested"</p>
+          <p class="review-who">Random guy at Saddleback, Rangeley, ME</p>
+        </blockquote>
+        <blockquote class="review">
+          <p class="review-pull">&ldquo;Cheers&rdquo;</p>
+          <p class="review-body">Ok, we haven't interviewed that many people, but a lot of people liked it at the mountain. My wife and I had a great snowshoe hike on the Flyrod Crosby Trail towards Rock Point, and the thing works - baby liked it.</p>
+          <p class="review-who">inventor</p>
+        </blockquote>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="outro">
+    <img src="Photos/2026-02-16 13.59.30.jpg" alt="Kid in stroller on a snowy trail" class="photo-slot" style="object-fit:cover; object-position:43% 57%;">
+    <div class="outro-scrim"></div>
+    <div class="outro-inner">
+      <h2>Winter made better with StrollSki<sup>TM</sup></h2>
+      <a href="#contact" class="btn btn-primary">Get yours</a>
+    </div>
+    <div class="stripe" style="top:0;">
+      <div style="background:var(--sky);"></div>
+      <div style="background:var(--tan);"></div>
+      <div style="background:var(--rust);"></div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="contact-inner">
+      <p class="eyebrow">License it. Build it. Ask us anything.</p>
+      <h2>Interested in StrollSki<sup>TM</sup>?</h2>
+      <p class="lede2">StrollSki&trade; is a patent-pending design by SK Design &amp; Engineering LLC, available for licensing, acquisition, and collaboration. Reach out through the SKDEN main site and we'll follow up directly.</p>
+      <a href="index.html#contact" class="btn btn-primary">Get in touch &rarr; SKDEN</a>
+      <p class="contact-email">Email — <a href="mailto:simon@skden.com">simon@skden.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="left">
+    <span>StrollSki&trade; — Patent Pending</span>
+    <span>Ref. No. SKDEN-001</span>
+    <span>Rev. 2026</span>
+  </div>
+  <div>&copy; 2026 SK Design &amp; Engineering LLC. All rights reserved.</div>
+</footer>
+
+<script>
+  (function(){
+    const host = document.getElementById('snow');
+    for (let i = 0; i < 26; i++) {
+      const left = (i * 37 + 13) % 100;
+      const size = 3 + (i % 4);
+      const dur = 7 + (i * 1.7) % 8;
+      const delay = -((i * 2.3) % 12);
+      const flake = document.createElement('span');
+      flake.style.left = left + '%';
+      flake.style.width = size + 'px';
+      flake.style.height = size + 'px';
+      flake.style.background = 'rgba(233,238,243,' + (0.35 + (i % 3) * 0.2) + ')';
+      flake.style.animationDuration = dur + 's';
+      flake.style.animationDelay = delay + 's';
+      host.appendChild(flake);
+    }
+  })();
+</script>
+
+</body>
+</html>
