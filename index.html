@@ -570,9 +570,10 @@
         <div class="contact-line"><span class="k">Based</span><span>United States</span></div>
         <p style="margin-top:3rem; padding:.5rem 1.5rem; border:3px solid rgba(220,235,247,.65);">For additional products and services visit our sister company <a href="https://www.absol.co" target="_blank" rel="noopener" style="text-decoration:none; border-bottom:1px solid var(--stamp);">Advanced Biomechanical Solutions LLC.</a></p>
       </div>
-           <form class="inquiry" id="inquiryForm" action="https://api.web3forms.com/submit" method="POST">
+    <form class="inquiry" id="inquiryForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="f60dccc0-3e88-4513-87bc-47a96e78b2b1">
         <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+        <div class="field">
           <label for="name">Name</label>
           <input id="name" name="name" type="text" required>
         </div>
@@ -623,7 +624,8 @@
     nav.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
   }));
-    const inquiryForm = document.getElementById('inquiryForm');
+
+  const inquiryForm = document.getElementById('inquiryForm');
   const formStatus = document.getElementById('formStatus');
   inquiryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
