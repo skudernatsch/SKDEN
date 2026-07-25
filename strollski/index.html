@@ -87,6 +87,21 @@
   nav.site-nav a:hover{ opacity:1; border-color:var(--rust); color:var(--ice); }
   nav.site-nav a.back{ border:1px solid rgba(233,238,243,.45); padding:.35rem .7rem; opacity:.9; }
   nav.site-nav a.back:hover{ opacity:1; border-color:var(--rust); color:var(--ice); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width:720px){
+    nav.site-nav{
+      position:fixed; inset:64px 0 auto 0; flex-direction:column; align-items:flex-start;
+      background:var(--slate); padding:1.2rem 1.5rem 1.6rem; gap:1rem;
+      border-bottom:1px solid rgba(233,238,243,.25);
+      transform:translateY(calc(-100% - 70px)); transition:transform .25s ease;
+    }
+    nav.site-nav.open{ transform:translateY(0); }
+    .nav-toggle{
+      display:flex; align-items:center; justify-content:center; background:none; border:1px solid rgba(233,238,243,.4); color:var(--ice);
+      width:64px; height:38px; padding:0; font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:.08em; cursor:pointer;
+    }
+  }
 
   /* ---------- Buttons ---------- */
   .btn{
@@ -257,7 +272,8 @@
     <a href="#top" class="brandmark">
       <span>Stro</span><svg class="ski-tick" style="margin:0 .045em 0 .05em;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><svg class="ski-tick" style="margin:0 .04em 0 0;" viewBox="0 0 27 160" preserveAspectRatio="none"><path d="M0,160 L0,48 A27,27 0 0 1 13.5,24.6 A27,27 0 0 1 27,48 L27,160 Z"/></svg><span>Ski</span><sup>TM</sup>
     </a>
-    <nav class="site-nav">
+    <button class="nav-toggle mono" id="navToggle" aria-expanded="false" aria-controls="siteNav">MENU</button>
+    <nav class="site-nav" id="siteNav">
       <a href="#features">Why</a>
       <a href="#detail">In Detail</a>
       <a href="#models">Models</a>
@@ -471,6 +487,17 @@
 </footer>
 
 <script>
+  const navToggle = document.getElementById('navToggle');
+  const siteNav = document.getElementById('siteNav');
+  navToggle.addEventListener('click', () => {
+    const open = siteNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  siteNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    siteNav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
+
   (function(){
     const host = document.getElementById('snow');
     for (let i = 0; i < 26; i++) {
